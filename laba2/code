@@ -1,0 +1,24 @@
+import re
+
+def digit_to_text(digit):
+    digit_dict = {'0': 'ноль', '1': 'один', '2': 'два', '3': 'три', '4': 'четыре', '5': 'пять', '6': 'шесть',
+                  '7': 'семь', '8': 'восемь', '9': 'девять'}
+    return digit_dict.get(digit, '')
+
+def main():
+    with open("laba.txt", "r") as file:
+        data = file.read()
+        regul = "\d3\d{5}"                    #регулярное выражение
+        numbers = re.findall(regul, data)
+
+        for number in numbers:
+            print("Число с второй слева цифрой равной 3:", number)
+            print("Нечетные цифры справа от тройки:")
+            for digit in number[2:]:
+                if int(digit) % 2 != 0:            #Проверка является ли текущая цифра нечетной
+                    print(digit)
+            print("Цифры, стоящие на нечетных местах (в числе):")
+            for i, digit in enumerate(number):
+                if i % 2 != 0:                     #Проверяется, находится ли цифра на нечетной позиции (индексе) и является ли ее позиция больше второй
+                    print(digit_to_text(digit))
+main()
